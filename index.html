@@ -8,10 +8,15 @@
     :root{--bg:#0f1226;--accent:#ff6b9a;--accent2:#ff2d95}
     html,body{height:100%;margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial}
     body{background:var(--bg);color:#fff;overflow:hidden}
-    .bgmedia{position:fixed;inset:0;z-index:0;display:flex;align-items:center;justify-content:center;overflow:hidden}
-    .bgmedia img, .bgmedia video{min-width:100%;min-height:100%;object-fit:cover;filter:blur(0px) saturate(1.05);opacity:0.95;}
     .stage{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;flex-direction:column;padding:32px;box-sizing:border-box;z-index:30}
-    h1{font-size:clamp(22px,4vw,40px);margin:0 0 8px;text-align:center;letter-spacing:0.6px}
+    h1{
+      font-size:clamp(22px,4vw,40px);
+      margin:0 0 8px;
+      text-align:center;
+      letter-spacing:0.6px;
+      color:#fff;
+      text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
+    }
     p.lead{margin:0 0 18px;opacity:0.95;text-align:center}
     .controls{position:fixed;left:12px;top:12px;display:flex;gap:8px;z-index:120}
     .btn{background:linear-gradient(180deg,var(--accent),var(--accent2));border:none;padding:8px 12px;border-radius:12px;color:#fff;font-weight:600;cursor:pointer;box-shadow:0 6px 18px rgba(255,60,140,0.12)}
@@ -29,53 +34,38 @@
     .big-heart p{margin:0;opacity:0.95}
     .footer{position:fixed;right:12px;bottom:12px;z-index:120;color:rgba(255,255,255,0.85);font-size:13px}
     .hint{position:fixed;left:50%;transform:translateX(-50%);bottom:18px;background:rgba(255,255,255,0.04);padding:8px 12px;border-radius:999px;font-size:13px;z-index:120}
-        h1 {
-        font-size: clamp(22px,4vw,40px);
-        margin: 0 0 8px;
-        text-align: center;
-        letter-spacing: 0.6px;
-        text-shadow: 
-            -2px -2px 0 #000,  
-            2px -2px 0 #000,  
-            -2px  2px 0 #000,  
-            2px  2px 0 #000; /* contorno negro */
-}
-        p.lead {
-        margin: 0 0 18px;
-        opacity: 0.95;
-        text-align: center;
-        text-shadow: 
-            -1px -1px 0 #000,
-            1px -1px 0 #000,
-            -1px  1px 0 #000,
-            1px  1px 0 #000;
-        }
-
-
     @media (max-width:600px){ .gallery img{width:96px;height:96px} .heart{width:48px;height:48px} }
+    .img-zoom-overlay {
+      position: fixed;inset: 0;
+      background: rgba(0,0,0,0.8);
+      display: flex;align-items: center;justify-content: center;
+      z-index: 500;
+      opacity: 0;pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .img-zoom-overlay.show {opacity: 1;pointer-events: auto;}
+    .img-zoom-overlay img {
+      max-width: 90%;max-height: 90%;
+      border-radius: 12px;box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+      animation: zoomIn 0.35s ease;
+    }
+    @keyframes zoomIn {
+      from { transform: scale(0.6); opacity: 0; }
+      to   { transform: scale(1); opacity: 1; }
+    }
   </style>
-
 </head>
 <body>
-  <div class="bgmedia" id="bgmedia">
-    <img id="bgImg" src="imagenes/minecraftfondo.gif" alt="Fondo romántico Minecraft" />
-  </div>
-
   <div class="stage" id="stage">
     <h1>Felices 3 meses, Amorcito 💖</h1>
-    <p class="lead"> Gracias por estar conmigo y acoger a mi corazon</p>
+    <p class="lead">hay un corazón que te busca. Si te atrapa… verás el mensaje.</p>
 
-    <!-- CONTROLES -->
     <div class="controls">
-        <button id="toggleCats" class="btn">Ocultar gatos</button>
-        <button id="onlyVideo" class="btn ghost">Solo fondo</button>
-        <button id="showMsg" class="btn ghost">Mostrar mensaje</button>
-        <!-- BOTÓN ESPECÍFICO PARA REAPARECER EL CORAZÓN -->
-        <button id="resetHeart" class="btn">Reaparecer corazón</button>
-        <!-- BOTÓN PARA CAMBIAR FONDO -->
-        <button id="cambiarFondo" class="btn ghost">Cambiar fondo</button>
+      <button id="toggleCats" class="btn">Ocultar gatos</button>
+      <button id="onlyVideo" class="btn ghost">Solo fondo</button>
+      <button id="showMsg" class="btn ghost">Mostrar mensaje</button>
+      <button id="resetHeart" class="btn">Reaparecer corazón</button>
     </div>
-
 
     <div class="gallery-wrap" id="galleryWrap">
       <div class="gallery" id="gallery">
@@ -104,218 +94,27 @@
     </div>
   </div>
 
-  <script>
-    
-  /* ---------- 🌆 CAMBIO MANUAL DE FONDO ---------- */
-  const fondos = [
-    "imagenes/minecraftfondo.gif",
-    "imagenes/minecraftfondo1.gif",
-    "imagenes/minecraftfondo2.gif",
-    "imagenes/minecraftfondo3.gif"
-  ];
-  let fondoIndex = 0;
-  const fondoImg = document.getElementById("bgImg");
-
-  document.getElementById("cambiarFondo").onclick = () => {
-    fondoIndex = (fondoIndex + 1) % fondos.length;
-    fondoImg.style.opacity = 0;
-    setTimeout(()=>{
-      fondoImg.src = fondos[fondoIndex];
-      fondoImg.style.opacity = 0.95;
-    }, 400);
-  };
-    /* ---------- FIN CAMBIO MANUAL DE FONDO ---------- */
-
-    const heartEl = document.getElementById('gameHeart');
-    const overlay = document.getElementById('overlay');
-    const bigTitle = document.getElementById('bigTitle');
-    const bigText = document.getElementById('bigText');
-    const closeOverlay = document.getElementById('closeOverlay');
-    const galleryWrap = document.getElementById('galleryWrap');
-    const toggleCats = document.getElementById('toggleCats');
-    const onlyVideo = document.getElementById('onlyVideo');
-    const showMsgBtn = document.getElementById('showMsg');
-    const resetHeartBtn = document.getElementById('resetHeart');
-
-    const MESSAGE_TITLE = "Te amo my love 💕";
-    const MESSAGE_BODY  = "Gracias por estar conmigo jsjsjsj";
-
-    let pointer = {x: window.innerWidth/2, y: window.innerHeight/2};
-    let heart = {x: window.innerWidth*0.2, y: window.innerHeight*0.3, vx:0, vy:0};
-    let heartActive = true;      // <<-- controla si el corazón está activo y visible
-    let overlayVisible = false;  // <<-- controla si el overlay ya está mostrado
-
-    function animate(){
-      if(!heartActive){
-        // ocultar el elemento y seguir el loop sin actualizar física
-        heartEl.style.display = 'none';
-        requestAnimationFrame(animate);
-        return;
-      } else {
-        heartEl.style.display = 'block';
-      }
-
-      // steering
-      const dx = pointer.x - heart.x;
-      const dy = pointer.y - heart.y;
-      const dist = Math.hypot(dx,dy) || 1;
-      const accel = 0.8;
-      heart.vx += (dx/dist) * accel;
-      heart.vy += (dy/dist) * accel;
-      heart.vx *= 0.86;
-      heart.vy *= 0.86;
-      heart.x += heart.vx;
-      heart.y += heart.vy;
-
-      heartEl.style.left = heart.x + 'px';
-      heartEl.style.top = heart.y + 'px';
-      const ang = Math.atan2(heart.vy, heart.vx) * 180/Math.PI + 90;
-      heartEl.style.transform = `translate(-50%,-50%) rotate(${ang}deg)`;
-
-      // Only trigger message if overlay not already visible
-      if(!overlayVisible && dist < 48){
-        showMessage();
-      }
-
-      requestAnimationFrame(animate);
-    }
-    requestAnimationFrame(animate);
-
-    // Input
-    function updatePointer(e){
-      if(e.touches && e.touches[0]){
-        pointer.x = e.touches[0].clientX;
-        pointer.y = e.touches[0].clientY;
-      } else {
-        pointer.x = e.clientX;
-        pointer.y = e.clientY;
-      }
-    }
-    window.addEventListener('mousemove', updatePointer);
-    window.addEventListener('touchmove', updatePointer, {passive:true});
-
-    function onRelease(e){
-      let rx = (e.changedTouches && e.changedTouches[0])? e.changedTouches[0].clientX : e.clientX;
-      let ry = (e.changedTouches && e.changedTouches[0])? e.changedTouches[0].clientY : e.clientY;
-      const d = Math.hypot(rx - heart.x, ry - heart.y);
-      // solo si overlay no visible
-      if(!overlayVisible && d < 140){
-        showMessage();
-      }
-    }
-    window.addEventListener('mouseup', onRelease);
-    window.addEventListener('touchend', onRelease);
-
-    window.addEventListener('click', (e)=>{ pointer.x = e.clientX; pointer.y = e.clientY; });
-    window.addEventListener('touchstart', (e)=>{ if(e.touches && e.touches[0]) { pointer.x = e.touches[0].clientX; pointer.y = e.touches[0].clientY; } }, {passive:true});
-
-    // Mensaje y control del corazón
-    function showMessage(){
-      if(overlayVisible) return;        // evita duplicados
-      overlayVisible = true;
-      bigTitle.textContent = MESSAGE_TITLE;
-      bigText.textContent = MESSAGE_BODY;
-      overlay.classList.add('show');
-      overlay.setAttribute('aria-hidden','false');
-
-      // DESACTIVAR el corazón inmediatamente para evitar bugs
-      heartActive = false;
-      heart.vx = heart.vy = 0;
-      // opcional: ocultarlo visualmente
-      heartEl.style.display = 'none';
-    }
-    function hideMessage(){
-      overlayVisible = false;
-      overlay.classList.remove('show');
-      overlay.setAttribute('aria-hidden','true');
-    }
-    closeOverlay.addEventListener('click', hideMessage);
-    showMsgBtn.addEventListener('click', showMessage);
-
-    // Botón para reaparecer el corazón (el que pediste)
-    resetHeartBtn.addEventListener('click', ()=>{
-      // Reactiva el corazón, lo centra y reinicia velocidad
-      heartActive = true;
-      heart.x = Math.min(window.innerWidth - 80, Math.max(80, window.innerWidth/2 - 60)); // posición segura
-      heart.y = Math.min(window.innerHeight - 80, Math.max(80, window.innerHeight*0.35));
-      heart.vx = 0;
-      heart.vy = 0;
-      // Si el overlay está abierto, cerrarlo (opcional). Aquí no lo cerramos automáticamente, solo reactivamos corazón.
-      // hideMessage();
-      heartEl.style.display = 'block';
-    });
-
-    // Galería
-    let catsVisible = true;
-    const toggleCatsBtn = document.getElementById('toggleCats');
-    toggleCatsBtn.addEventListener('click', ()=>{
-      catsVisible = !catsVisible;
-      galleryWrap.style.display = catsVisible ? 'block' : 'none';
-      toggleCatsBtn.textContent = catsVisible ? 'Ocultar gatos' : 'Mostrar gatos';
-    });
-    onlyVideo.addEventListener('click', ()=>{
-      galleryWrap.style.display = 'none';
-      toggleCatsBtn.textContent = 'Mostrar gatos';
-      catsVisible = false;
-    });
-
-    // click en overlay para cerrarlo (si se hace click fuera del cuadro)
-    overlay.addEventListener('click', (e)=>{ if(e.target === overlay) hideMessage(); });
-    window.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') hideMessage(); });
-
-    // mantener corazón en límites
-    window.addEventListener('resize', ()=>{ heart.x = Math.min(window.innerWidth-60, heart.x); heart.y = Math.min(window.innerHeight-60, heart.y); });
-
-  </script>
-  
-    <style>
-    .img-zoom-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.8);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 500;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s;
-    }
-    .img-zoom-overlay.show {
-      opacity: 1;
-      pointer-events: auto;
-    }
-    .img-zoom-overlay img {
-      max-width: 90%;
-      max-height: 90%;
-      border-radius: 12px;
-      box-shadow: 0 12px 40px rgba(0,0,0,0.6);
-      animation: zoomIn 0.35s ease;
-    }
-    @keyframes zoomIn {
-      from { transform: scale(0.6); opacity: 0; }
-      to   { transform: scale(1); opacity: 1; }
-    }
-  </style>
-
+  <!-- ZOOM DE IMÁGENES -->
   <div class="img-zoom-overlay" id="imgZoom">
     <img src="" alt="Zoom" id="zoomedImg">
   </div>
 
   <script>
+    // 🔍 ZOOM DE GALERÍA (fix: no interfiere con el corazón)
     const galleryImgs = document.querySelectorAll('.gallery img');
     const imgZoom = document.getElementById('imgZoom');
     const zoomedImg = document.getElementById('zoomedImg');
 
     galleryImgs.forEach(img=>{
-      img.addEventListener('click', ()=>{
+      img.addEventListener('click', (e)=>{
+        e.stopPropagation(); // evita que se dispare el overlay del corazón
         zoomedImg.src = img.src;
         imgZoom.classList.add('show');
       });
     });
+
     imgZoom.addEventListener('click', ()=> imgZoom.classList.remove('show'));
     window.addEventListener('keydown',(e)=>{ if(e.key==='Escape') imgZoom.classList.remove('show'); });
   </script>
-
 </body>
 </html>
