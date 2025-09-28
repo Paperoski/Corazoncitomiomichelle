@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>La Frase del Día</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="bgmedia"><img src="imagenes/minecraftfondo1.gif" alt="Fondo Romántico" /></div>
+
+    <nav class="main-nav">
+        <a href="index.html" class="home-link">💖</a>
+        <a href="tiempo.html">Tiempo</a>
+        <a href="frases.html" class="active">Frases</a>
+        <a href="musica.html">Música</a>
+        <a href="juego.html">Juego</a>
+    </nav>
+
+    <div class="stage">
+        <div class="content-card">
+            <div id="daily-quote-content">
+                <blockquote>Buscando en nuestro universo un mensaje para ti...</blockquote>
+                <cite>🌌</cite>
+            </div>
+        </div>
+    </div>
+  
+    <div class="footer">Diseñado con todo mi amor para ti 💖</div>
+
+    <script>
+      // --- BASE DE DATOS DE FRASES ---
+
+      // NIVEL 4: "Legendario" - Declaraciones profundas (3% de probabilidad)
+        const declaracionesReflexivas = [
+        { quote: "Hoy no es un día normal. Es uno de esos en los que me detengo a pensar en la increíble suerte que tengo. Esto no es un piropo, es una certeza: cambiaste mi vida por completo y para siempre. Te amo.", theme: "Una Confesión Sincera 💌" },
+        { quote: "A veces me pregunto cómo sería mi vida sin ti y, sinceramente, no puedo ni quiero imaginarlo. Eres el pilar de mi mundo, mi calma y mi aventura. Esta es la realidad más bonita que he vivido.", theme: "Una Confesión Sincera 💌" },
+        { quote: "Más allá de los chistes y los juegos, quiero que sepas algo muy en serio: eres la persona con la que quiero construirlo todo. Mis risas más tontas y mis planes más serios te incluyen siempre a ti. Eres mi futuro.", theme: "Una Confesión Sincera 💌" },
+        { quote: "Quizás no te lo digo todos los días, pero tu existencia hace que mi mundo sea un lugar radicalmente mejor. Gracias por ser tú, por dejarme ser yo y por construir este 'nosotros', que es mi lugar favorito.", theme: "Una Confesión Sincera 💌" },
+        { quote: "He pensado en qué momento me enamoré de ti, y no fue un solo momento. Ha sido una suma de miles de instantes: tu risa, tu apoyo, tu forma de ver el mundo. Me enamoro de ti constantemente.", theme: "Una Confesión Sincera 💌" },
+        { quote: "A tu lado, he descubierto una versión de mí mismo que no sabía que existía, una que es más feliz, más valiente y más completa. Y todo es gracias a ti.", theme: "Una Confesión Sincera 💌" },
+        { quote: "Si alguna vez dudas de la magia, solo recuerda cómo nos encontramos. Eres la prueba de que las cosas más increíbles suceden.", theme: "Una Confesión Sincera 💌" },
+        { quote: "No solo me enamoré de la persona que eres ahora, sino de todas las versiones de ti que he conocido y las que conoceré en el futuro.", theme: "Una Confesión Sincera 💌" },
+        { quote: "Eres mi ancla en la tormenta y mi cometa en el día de viento. Me das equilibrio y me ayudas a volar.", theme: "Una Confesión Sincera 💌" },
+        { quote: "Gracias por amarme en mis días buenos y, sobre todo, por amarme aún más fuerte en mis días malos.", theme: "Una Confesión Sincera 💌" },
+        { quote: "El amor no se trata de no tener problemas, sino de saber que los enfrentaremos juntos. Y no hay nadie con quien prefiera luchar mis batallas.", theme: "Una Confesión Sincera 💌" },
+        { quote: "Eres esa persona que llegó sin buscarla y se convirtió en todo lo que necesitaba sin saberlo.", theme: "Una Confesión Sincera 💌" },
+        { quote: "Lo que más me gusta de nosotros es que no importa el tiempo que pase, siempre encontramos una nueva razón para elegirnos.", theme: "Una Confesión Sincera 💌" },
+        { quote: "Contigo, el silencio no es incómodo. Es una conversación sin palabras, un espacio de paz que solo encuentro a tu lado.", theme: "Una Confesión Sincera 💌" },
+        { quote: "No se trata de la 'media naranja'. Se trata de encontrar a alguien con quien quieras compartir las naranjas para siempre. Y esa eres tú.", theme: "Una Confesión Sincera 💌" },
+        { quote: "Me haces querer ser un mejor hombre, no por obligación, sino porque me inspiras a estar a la altura del increíble ser humano que eres.", theme: "Una Confesión Sincera 💌" },
+        { quote: "Cada vez que pienso que no puedo quererte más, haces algo pequeño y maravilloso que me demuestra lo equivocado que estaba.", theme: "Una Confesión Sincera 💌" },
+        { quote: "Eres el hogar al que mi corazón siempre quiere volver, sin importar lo lejos que esté.", theme: "Una Confesión Sincera 💌" },
+        { quote: "Mi definición de un día perfecto ha cambiado desde que te conocí: ahora es cualquier día en el que esté contigo.", theme: "Una Confesión Sincera 💌" },
+        { quote: "Gracias por enseñarme que el amor verdadero es un equipo, no una competencia.", theme: "Una Confesión Sincera 💌" }
+        ];
+      // NIVEL 3: "Épico" - Piropos Modo Diablo (12% de probabilidad)
+        const piroposModoDiablo = [
+        { quote: "Quisiera ser bloque de slime para que saltes sobre mí toda la noche.", theme: "Misión Nivel Extremo 🥵" },
+        { quote: "Si mis dedos fueran 'joysticks', hoy no los soltarías para nada.", theme: "Misión Nivel Extremo 🥵" },
+        { quote: "Las verdaderas joyas son las dos que tienes en el pecho.", theme: "Misión Nivel Extremo 🥵" },
+        { quote: "Quiero explorar tu cueva más secreta, y te aseguro que llevo la mejor espada.", theme: "Misión Nivel Extremo 🥵" },
+        { quote: "Esta noche, el único 'juego' que quiero pasarme eres tú.", theme: "Misión Nivel Extremo 🥵" },
+        { quote: "Olvida el farmeo de experiencia, el único 'grind' que quiero hacer esta noche es contigo.", theme: "Misión Nivel Extremo 🥵" },
+        { quote: "Tengo un repetidor de redstone listo para una noche de señales... continuas.", theme: "Misión Nivel Extremo 🥵" },
+        { quote: "Vamos a hacer que los vecinos necesiten bajar el volumen.", theme: "Misión Nivel Extremo 🥵" },
+        { quote: "Mi cama es como un portal al Nether, entramos los dos y salimos sudando.", theme: "Misión Nivel Extremo 🥵" },
+        { quote: "Ese vestido se vería increíble en el suelo de mi habitación.", theme: "Misión Nivel Extremo 🥵" },
+        { quote: "Mi lugar favorito en el mundo es dentro de tus brazos... y de tus piernas.", theme: "Misión Nivel Extremo 🥵" },
+        { quote: "¿Jugamos en modo difícil? Prometo que el 'boss final' valdrá toda la pena.", theme: "Misión Nivel Extremo 🥵" },
+        { quote: "No necesito una poción de fuerza para lo que tengo en mente, solo a ti.", theme: "Misión Nivel Extremo 🥵" },
+        { quote: "Si fueras un encantamiento, serías 'Empuje II', porque sabes cómo mover mi mundo.", theme: "Misión Nivel Extremo 🥵" },
+        { quote: "Prepárate para un 'raid' de besos esta noche. Y te aviso que yo gano siempre.", theme: "Misión Nivel Extremo 🥵" },
+        { quote: "Quiero aumentar todas mis 'stats' contigo esta noche, especialmente la de resistencia.", theme: "Misión Nivel Extremo 🥵" },
+        { quote: "Eres mi 'loot' legendario, y planeo equiparte toda la noche.", theme: "Misión Nivel Extremo 🥵" },
+        { quote: "Dicen que la obsidiana es dura, pero no tanto como me pones tú.", theme: "Misión Nivel Extremo 🥵" },
+        { quote: "Vamos a craftear algo inolvidable, tengo todos los materiales listos.", theme: "Misión Nivel Extremo 🥵" },
+        { quote: "Quiero darte más duro que a un árbol de Minecraft al empezar un survival.", theme: "Misión Nivel Extremo 🥵" },
+        { quote: "Contigo no necesito trucos, me pasas el juego en la primera noche.", theme: "Misión Nivel Extremo 🥵" },
+        { quote: "Eres la palanca que le faltaba a mi pistón.", theme: "Misión Nivel Extremo 🥵" },
+        { quote: "Tu cuarto o el mío para nuestra 'sesión de juego' privada?", theme: "Misión Nivel Extremo 🥵" },
+        { quote: "A tu lado, siento una 'vibración' que no es la de mi control.", theme: "Misión Nivel Extremo 🥵" },
+        { quote: "Esta noche quiero que me uses como tu 'joystick' personal.", theme: "Misión Nivel Extremo 🥵" },
+        { quote: "Te voy a tratar con la misma delicadeza con la que guardo mi partida después de vencer a un jefe.", theme: "Misión Nivel Extremo 🥵" },
+        { quote: "Si se pudiera, te pondría en 'replay' una y otra vez.", theme: "Misión Nivel Extremo 🥵" },
+        { quote: "Tienes el 'cheat code' para desbloquear todos mis deseos.", theme: "Misión Nivel Extremo 🥵" },
+        { quote: "No eres la tarea, pero tengo ganas de hacerte toda la noche.", theme: "Misión Nivel Extremo 🥵" },
+        { quote: "Quisiera ser tu almohada para que me abraces hasta la mañana.", theme: "Misión Nivel Extremo 🥵" },
+        { quote: "Mi amor por ti es como el universo, en constante expansión y cada vez más caliente.", theme: "Misión Nivel Extremo 🥵" },
+        { quote: "La ropa estorba, juguemos a explorar nuestros biomas.", theme: "Misión Nivel Extremo 🥵" },
+        { quote: "Te comería a besos, y de postre también.", theme: "Misión Nivel Extremo 🥵" },
+        { quote: "Si besarte es un pecado, con gusto me voy al infierno.", theme: "Misión Nivel Extremo 🥵" },
+        { quote: "No soy muy bueno en historia, pero juntos podemos hacer historia esta noche.", theme: "Misión Nivel Extremo 🥵" },
+        { quote: "Tus besos son como el Wi-Fi, me conectan al instante.", theme: "Misión Nivel Extremo 🥵" },
+        { quote: "Apaga la luz, que quiero ver las estrellas que tienes en el cuerpo.", theme: "Misión Nivel Extremo 🥵" },
+        { quote: "No sé si eres experta en crafteo, pero qué bien hecha estás.", theme: "Misión Nivel Extremo 🥵" },
+        { quote: "Por ti, me paso la noche en vela... y en todo lo demás que quieras.", theme: "Misión Nivel Extremo 🥵" },
+        { quote: "Déjame ser el 'admin' de tu servidor privado.", theme: "Misión Nivel Extremo 🥵" },
+        { quote: "Eres como una poción de daño instantáneo, me dejas sin aliento al momento.", theme: "Misión Nivel Extremo 🥵" },
+        { quote: "Mi cama tiene el encantamiento de 'atracción', especialmente cuando estás en ella.", theme: "Misión Nivel Extremo 🥵" },
+        { quote: "Quiero ser el 'enderman' que te robe un beso y se teletransporte contigo a otro lugar.", theme: "Misión Nivel Extremo 🥵" },
+        { quote: "Si fueras una 'raid', dejaría que invadieras mi base cuando quisieras.", theme: "Misión Nivel Extremo 🥵" },
+        { quote: "Tienes una 'hitbox' perfecta.", theme: "Misión Nivel Extremo 🥵" },
+        { quote: "Juguemos a ser bloques de arena, a ver quién cae primero sobre quién.", theme: "Misión Nivel Extremo 🥵" },
+        { quote: "Eres la 'textura' que quiero ver en alta definición toda la noche.", theme: "Misión Nivel Extremo 🥵" },
+        { quote: "Vamos a jugar en modo 'multijugador' esta noche, en un mundo privado.", theme: "Misión Nivel Extremo 🥵" },
+        { quote: "Mi 'inventario' está lleno de besos y caricias para ti.", theme: "Misión Nivel Extremo 🥵" },
+        { quote: "Eres como un 'shader', haces que mi mundo se vea mucho más realista y... húmedo.", theme: "Misión Nivel Extremo 🥵" }
+        ];
+      
+      // NIVEL 2: "Raro" - Piropos juguetones (25% de probabilidad)
+    const piroposJuguetones = [
+    { quote: "¿Eres redstone? Porque activas todos mis mecanismos.", theme: "Piropos Especiales ✨" },
+    { quote: "Si fueras un pistón pegajoso, no me importaría quedarme pegado a ti todo el día.", theme: "Piropos Especiales ✨" },
+    { quote: "Debes tener un encantamiento de 'Atracción V', porque no puedo evitar seguirte a todas partes.", theme: "Piropos Especiales ✨" },
+    { quote: "Olvídate del Nether, la única que me hace arder eres tú.", theme: "Piropos Especiales ✨" },
+    { quote: "Nuestro amor es como una granja de mobs bien hecha: eficiente y produce cosas increíbles sin parar.", theme: "Piropos Especiales ✨" },
+    { quote: "Si mis besos fueran creepers, ya te habría explotado de amor.", theme: "Piropos Especiales ✨" },
+    { quote: "Eres como una poción de velocidad, aceleras mi corazón al instante.", theme: "Piropos Especiales ✨" },
+    { quote: "Contigo no necesito mapa, perderme en tus ojos es mi destino favorito.", theme: "Piropos Especiales ✨" },
+    { quote: "Si el amor fuera un juego, tú serías el logro más difícil y satisfactorio de desbloquear.", theme: "Piropos Especiales ✨" },
+    { quote: "Eres la pieza que le faltaba a mi 'set' de armadura de diamante.", theme: "Piropos Especiales ✨" },
+    { quote: "Finn tiene a Jake, y yo te tengo a ti, mi compañera de aventuras perfecta.", theme: "Piropos Especiales ✨" },
+    { quote: "Si fueras un ataque de 'Hora de Aventura', serías uno '¡Matemático!' porque eres perfecta.", theme: "Piropos Especiales ✨" },
+    { quote: "Ojalá fueras un elote, para comerte a besos de la cabeza a los pies.", theme: "Piropos Especiales ✨" },
+    { quote: "Eres tan dulce que podrías darle diabetes al Señor de los Dulces.", theme: "Piropos Especiales ✨" },
+    { quote: "¿Eres una Super-Estrella de Mario? Porque cada vez que te veo, siento que puedo con todo.", theme: "Piropos Especiales ✨" },
+    { quote: "Debes ser un Pokémon legendario, porque eres única y difícil de encontrar.", theme: "Piropos Especiales ✨" },
+    { quote: "Por ti, cruzaría el Puente del Arcoíris de Mario Kart sin caerme.", theme: "Piropos Especiales ✨" },
+    { quote: "Nuestro amor es como el Tetris, todas las piezas encajan a la perfección.", theme: "Piropos Especiales ✨" },
+    { quote: "Si fueras un personaje de videojuego, tendrías 100 en carisma y 100 en belleza.", theme: "Piropos Especiales ✨" },
+    { quote: "Eres la 'Princesa Peach' de mi vida, y siempre correré a rescatarte (de un mal día).", theme: "Piropos Especiales ✨" },
+    { quote: "Si me dieran a elegir entre tú y el 'loot' épico, te elegiría a ti (pero si puedes traer el loot, mejor).", theme: "Piropos Especiales ✨" },
+    { quote: "Eres como un 'easter egg' en mi vida: la sorpresa más increíble y genial.", theme: "Piropos Especiales ✨" },
+    { quote: "Quisiera ser el 'mouse' para que me tengas en tu mano todo el día.", theme: "Piropos Especiales ✨" },
+    { quote: "Tienes más 'gráficos' que una RTX 4090.", theme: "Piropos Especiales ✨" },
+    { quote: "Nuestro amor no necesita 'guardado rápido', porque es inolvidable.", theme: "Piropos Especiales ✨" },
+    { quote: "Eres la 'waifu' definitiva, superas a todas las del anime.", theme: "Piropos Especiales ✨" },
+    { quote: "Contigo, la 'realidad' es mi 'mundo virtual' favorito.", theme: "Piropos Especiales ✨" },
+    { quote: "Eres como la canción de un jefe final: épica, intensa y se queda en mi cabeza todo el día.", theme: "Piropos Especiales ✨" },
+    { quote: "Si nuestro amor fuera un anime, ya iríamos por la temporada 5 y los fans pedirían más.", theme: "Piropos Especiales ✨" },
+    { quote: "Por ti me enfrentaría a los siete ex malvados de Ramona Flowers.", theme: "Piropos Especiales ✨" },
+    { quote: "Tienes la sonrisa más 'OP' (Overpowered), me derrota al instante.", theme: "Piropos Especiales ✨" },
+    { quote: "No eres Google, pero tienes todo lo que busco.", theme: "Piropos Especiales ✨" },
+    { quote: "Si la belleza fuera un crimen, te darían cadena perpetua.", theme: "Piropos Especiales ✨" },
+    { quote: "Me gustas más que el pan recién hecho.", theme: "Piropos Especiales ✨" },
+    { quote: "Si fueras un sándwich, serías un 'cúbito' de rico.", theme: "Piropos Especiales ✨" },
+    { quote: "Eres como una actualización de software, mejoras mi vida por completo.", theme: "Piropos Especiales ✨" },
+    { quote: "Si tuviera que elegir un súper poder, sería poder leer tu mente para saber siempre cómo hacerte feliz.", theme: "Piropos Especiales ✨" },
+    { quote: "Mi plan para hoy era no enamorarme, pero te vi y... bueno, a quién no le gusta arruinar planes.", theme: "Piropos Especiales ✨" },
+    { quote: "Creo que tu segundo nombre es 'Imposible', porque es imposible no quererte.", theme: "Piropos Especiales ✨" },
+    { quote: "Ojalá fueras el cargador de mi celular, para no poder vivir sin ti ni un segundo.", theme: "Piropos Especiales ✨" },
+    { quote: "Me gustas más que dormir hasta tarde los domingos.", theme: "Piropos Especiales ✨" },
+    { quote: "Eres como esa canción que no puedo sacar de mi cabeza.", theme: "Piropos Especiales ✨" },
+    { quote: "Si fueses una verdura, serías un 'bombón' de brócoli.", theme: "Piropos Especiales ✨" },
+    { quote: "Te quiero como un pato: 'cua-ndo' te veo, me emociono.", theme: "Piropos Especiales ✨" },
+    { quote: "Eres la razón por la que reviso mi teléfono cada cinco minutos.", theme: "Piropos Especiales ✨" },
+    { quote: "Si ser sexy fuera un deporte, serías campeona olímpica.", theme: "Piropos Especiales ✨" },
+    { quote: "Mi corazón hace 'Ctrl+C' y 'Ctrl+V' contigo todo el tiempo.", theme: "Piropos Especiales ✨" },
+    { quote: "Eres tan bonita que se me olvida lo que iba a decir.", theme: "Piropos Especiales ✨" },
+    { quote: "Si fueras un bug, serías el que no quiero que arreglen nunca.", theme: "Piropos Especiales ✨" },
+    { quote: "Te doy un 10 de 10, y eso que no soy jurado de nada.", theme: "Piropos Especiales ✨" },
+    { quote: "Debes estar cansada, porque llevas todo el día corriendo en mi mente.", theme: "Piropos Especiales ✨" },
+    { quote: "Si fueras un archivo, serías un .zip de sorpresas.", theme: "Piropos Especiales ✨" },
+    { quote: "Me siento como un aldeano cuando te veo: solo puedo hacer ruidos de felicidad.", theme: "Piropos Especiales ✨" },
+    { quote: "Eres la esmeralda que ningún aldeano podría pagarme.", theme: "Piropos Especiales ✨" },
+    { quote: "Contigo, mi barra de hambre de amor siempre está llena.", theme: "Piropos Especiales ✨" },
+    { quote: "Nuestro amor es más sólido que un bloque de bedrock.", theme: "Piropos Especiales ✨" },
+    { quote: "Me tienes más enganchado que a una mesa de encantamientos.", theme: "Piropos Especiales ✨" },
+    { quote: "Si fueras una herramienta, serías una 'azada' de hermosa.", theme: "Piropos Especiales ✨" },
+    { quote: "Por ti, minaría obsidiana con un pico de madera.", theme: "Piropos Especiales ✨" },
+    { quote: "Eres la pieza de puzzle que no sabía que estaba buscando.", theme: "Piropos Especiales ✨" },
+    { quote: "Si la vida fuera un videojuego, serías mi personaje favorito.", theme: "Piropos Especiales ✨" }
+    ];
+        const piroposRomanticos = [
+        { quote: "¿Acaso eres una antorcha? Porque llegaste a iluminar la cueva más oscura de mi mundo.", theme: "Desde mi Corazón de 8-bits" },
+        { quote: "Antes de ti, mi vida era modo supervivencia. Ahora, contigo, todo se siente como modo creativo.", theme: "Desde mi Corazón de 8-bits" },
+        { quote: "Eres como encontrar un bioma de champiñones: rara, mágica y el lugar donde quiero construir mi hogar para siempre.", theme: "Desde mi Corazón de 8-bits" },
+        { quote: "Si mi corazón fuera un cofre, tú serías el tesoro legendario que guarda dentro.", theme: "Desde mi Corazón de 8-bits" },
+        { quote: "No necesito una baliza para encontrar mi camino, solo necesito saber que al final del día te encontraré a ti.", theme: "Desde mi Corazón de 8-bits" },
+        { quote: "Contigo, cada día es como subir de nivel. Me haces una mejor versión de mí mismo.", theme: "Desde mi Corazón de 8-bits" },
+        { quote: "Nuestro amor es la 'misión principal' de mi vida, y la disfruto cada segundo.", theme: "Desde mi Corazón de 8-bits" },
+        { quote: "Eres la melodía de fondo de mis días, la que hace que todo sea más bonito.", theme: "Desde mi Corazón de 8-bits" },
+        { quote: "Si tuviera que craftear mi vida perfecta, el ingrediente principal serías tú.", theme: "Desde mi Corazón de 8-bits" },
+        { quote: "En el inventario de mi vida, ocupas todos los espacios del corazón.", theme: "Desde mi Corazón de 8-bits" },
+        { quote: "Cada momento a tu lado es como encontrar un diamante: valioso e inolvidable.", theme: "Desde mi Corazón de 8-bits" },
+        { quote: "Eres mi punto de 'respawn', el lugar seguro al que siempre quiero volver.", theme: "Desde mi Corazón de 8-bits" },
+        { quote: "No eres una opción, eres mi 'build' definitiva y perfecta.", theme: "Desde mi Corazón de 8-bits" },
+        { quote: "Nuestra historia de amor es mi 'lore' favorito.", theme: "Desde mi Corazón de 8-bits" },
+        { quote: "Me curas más que cualquier poción de regeneración.", theme: "Desde mi Corazón de 8-bits" },
+        { quote: "Eres la 'skin' que mi corazón eligió para siempre.", theme: "Desde mi Corazón de 8-bits" },
+        { quote: "Contigo, la vida no tiene 'lag', todo fluye perfecto.", theme: "Desde mi Corazón de 8-bits" },
+        { quote: "Mi amor por ti tiene más durabilidad que una herramienta de netherite con 'irrompibilidad III'.", theme: "Desde mi Corazón de 8-bits" },
+        { quote: "Eres la aventura que no quiero que termine nunca.", theme: "Desde mi Corazón de 8-bits" },
+        { quote: "Construir un futuro contigo es el proyecto más emocionante de mi vida.", theme: "Desde mi Corazón de 8-bits" },
+        { quote: "Gracias por ser la calma en mi caos y la locura en mi orden.", theme: "Reflexiones de Amor" },
+        { quote: "No sabía que podía ser tan feliz hasta que empecé a serlo contigo.", theme: "Reflexiones de Amor" },
+        { quote: "Eres mi persona favorita para no hacer nada y sentir que lo hacemos todo.", theme: "Reflexiones de Amor" },
+        { quote: "Mi plan no era enamorarme, pero sonreíste y arruinaste todo de la mejor manera.", theme: "Reflexiones de Amor" },
+        { quote: "En un mundo de variables, tú eres mi constante favorita.", theme: "Reflexiones de Amor" },
+        { quote: "Amarte es como respirar, no puedo evitarlo y es esencial para mi vida.", theme: "Reflexiones de Amor" },
+        { quote: "Contigo aprendí que 'para siempre' son en realidad muchos 'ahoras' juntos.", theme: "Reflexiones de Amor" },
+        { quote: "Eres esa parte de mi vida que no sabía que necesitaba, pero que ahora no puedo imaginar sin ella.", theme: "Reflexiones de Amor" },
+        { quote: "Lo nuestro no fue amor a primera vista, fue amor a primera risa.", theme: "Reflexiones de Amor" },
+        { quote: "Gracias por pintar mi mundo con colores que ni yo sabía que existían.", theme: "Reflexiones de Amor" },
+        { quote: "Eres mi café de las mañanas y mi té de las noches.", theme: "Reflexiones de Amor" },
+        { quote: "Pensar en mi futuro es fácil, solo te imagino a ti en él.", theme: "Reflexiones de Amor" },
+        { quote: "No eres lo que siempre soñé, eres mucho mejor.", theme: "Reflexiones de Amor" },
+        { quote: "Me enamoro de ti todos los días, a veces dos o tres veces.", theme: "Reflexiones de Amor" },
+        { quote: "La vida es un viaje, y no hay nadie más con quien quisiera compartir el asiento.", theme: "Reflexiones de Amor" },
+        { quote: "Eres la respuesta a preguntas que ni siquiera sabía que tenía.", theme: "Reflexiones de Amor" },
+        { quote: "Si la felicidad es un momento, yo quiero vivir en el momento en que te conocí.", theme: "Reflexiones de Amor" },
+        { quote: "No sé de qué están hechas las almas, pero la tuya y la mía son de lo mismo.", theme: "Reflexiones de Amor" },
+        { quote: "Me gusta cuando nos reímos de la nada, y luego nos miramos y nos reímos más.", theme: "Reflexiones de Amor" },
+        { quote: "Tu felicidad se ha convertido en una de mis prioridades.", theme: "Reflexiones de Amor" },
+        { quote: "Eres mi notificación favorita, la que siempre espero con ansias.", theme: "Desde mi Corazón de 8-bits" },
+        { quote: "Si nuestro amor fuera código, no tendría ni un solo 'bug'.", theme: "Desde mi Corazón de 8-bits" },
+        { quote: "Eres el 'firewall' que protege mi corazón de cualquier virus de tristeza.", theme: "Desde mi Corazón de 8-bits" },
+        { quote: "Mi amor por ti se 'autocompleta' solo con pensar en tu nombre.", theme: "Desde mi Corazón de 8-bits" },
+        { quote: "Eres el 'CSS' de mi 'HTML', haces que todo en mi vida se vea más bonito.", theme: "Desde mi Corazón de 8-bits" },
+        { quote: "Nuestra conexión es más estable que una conexión por fibra óptica.", theme: "Desde mi Corazón de 8-bits" },
+        { quote: "No necesito 'Google Maps', mi destino siempre eres tú.", theme: "Desde mi Corazón de 8-bits" },
+        { quote: "Para mí, eres 'resolución 4K', perfecta desde cualquier ángulo.", theme: "Desde mi Corazón de 8-bits" },
+        { quote: "Eres el 'algoritmo' que mi corazón siempre elige.", theme: "Desde mi Corazón de 8-bits" },
+        { quote: "Si tuviera que 'debuggear' mi vida, el único código que no tocaría sería el nuestro.", theme: "Desde mi Corazón de 8-bits" },
+        { quote: "Eres el 'bookmark' de mi vida, la página a la que siempre quiero volver.", theme: "Desde mi Corazón de 8-bits" },
+        { quote: "Nuestro amor es 'open source', siempre creciendo y mejorando juntos.", theme: "Desde mi Corazón de 8-bits" },
+        { quote: "Me 'hackeaste' el corazón y no pienso cambiar la contraseña.", theme: "Desde mi Corazón de 8-bits" },
+        { quote: "Eres mi 'modo oscuro' favorito, porque contigo hasta la noche es más acogedora.", theme: "Desde mi Corazón de 8-bits" },
+        { quote: "En el 'servidor' de mi vida, tú tienes todos los permisos de 'administrador'.", theme: "Desde mi Corazón de 8-bits" },
+        { quote: "Eres el 'driver' que le faltaba a mi hardware para funcionar al 100% de felicidad.", theme: "Desde mi Corazón de 8-bits" },
+        { quote: "Si el amor se midiera en 'gigas', lo nuestro sería un 'terabyte' de sentimientos.", theme: "Desde mi Corazón de 8-bits" },
+        { quote: "Contigo, la vida tiene 'sonido envolvente'.", theme: "Desde mi Corazón de 8-bits" },
+        { quote: "Eres la 'cookie' que acepto sin leer los términos y condiciones.", theme: "Desde mi Corazón de 8-bits" },
+        { quote: "Nuestra historia es el 'backup' que más me importa proteger.", theme: "Desde mi Corazón de 8-bits" },
+        { quote: "El mundo es más bonito desde que lo veo contigo.", theme: "Reflexiones de Amor" },
+        { quote: "Eres la razón por la que creo en la magia.", theme: "Reflexiones de Amor" }
+        ];
+           const quoteContentEl = document.getElementById('daily-quote-content');
+
+      // --- LÓGICA ANTI-REPETICIÓN (No cambia) ---
+      function getUniqueQuote(categoryName, phraseList) {
+        let usedIndices = JSON.parse(localStorage.getItem(categoryName)) || [];
+        const totalIndices = Array.from(Array(phraseList.length).keys());
+        const availableIndices = totalIndices.filter(index => !usedIndices.includes(index));
+        if (availableIndices.length > 0) {
+          const randomIndex = availableIndices[Math.floor(Math.random() * availableIndices.length)];
+          usedIndices.push(randomIndex);
+          localStorage.setItem(categoryName, JSON.stringify(usedIndices));
+          return phraseList[randomIndex];
+        } else {
+          console.log(`Todas las frases de '${categoryName}' han sido vistas. Reiniciando la lista.`);
+          const randomIndex = totalIndices[Math.floor(Math.random() * totalIndices.length)];
+          localStorage.setItem(categoryName, JSON.stringify([randomIndex]));
+          return phraseList[randomIndex];
+        }
+      }
+
+      // --- FUNCIONES PARA MOSTRAR LAS FRASES (No cambian) ---
+      function displaySingleQuote(quote, theme, title) {
+        quoteContentEl.innerHTML = `
+          <h2>${title}</h2>
+          <blockquote>“${quote}”</blockquote>
+          <cite>- ${theme}</cite>
+        `;
+      }
+      function displayTwoQuotes(juguetona, normal) {
+        quoteContentEl.innerHTML = `
+          <h2>¡Día con Doble Sorpresa!</h2>
+          <blockquote>“${juguetona.quote}”</blockquote>
+          <cite>- ${juguetona.theme}</cite>
+          <hr style="border-color: rgba(255,255,255,0.1); margin: 20px 0;">
+          <p style="font-size: 14px; opacity: 0.8; margin-bottom: 10px;">Y un mensaje de nuestro universo para ti:</p>
+          <blockquote>“${normal.quote}”</blockquote>
+          <cite>- ${normal.theme}</cite>
+        `;
+      }
+
+      // --- NUEVA LÓGICA PRINCIPAL: UNA FRASE POR DÍA ---
+
+      function initializeDailyQuote() {
+        // 1. Obtener la fecha de hoy en un formato simple (ej: "2025-09-27")
+        const today = new Date().toISOString().slice(0, 10);
+        
+        // 2. Cargar la frase guardada desde la memoria.
+        const savedQuoteData = JSON.parse(localStorage.getItem('dailyQuote'));
+
+        // 3. Comprobar si existe una frase guardada y si es de hoy.
+        if (savedQuoteData && savedQuoteData.date === today) {
+          console.log("Cargando la frase guardada para hoy.");
+          // Si ya hay una frase para hoy, simplemente la mostramos.
+          quoteContentEl.innerHTML = savedQuoteData.content;
+        } else {
+          console.log("Generando una nueva frase para hoy.");
+          // Si no hay frase o es de un día anterior, generamos una nueva.
+          generateNewDailyQuote(today);
+        }
+      }
+
+      function generateNewDailyQuote(today) {
+        // Esta es la lógica de probabilidad que ya teníamos.
+        const chance = Math.random();
+
+        // Nivel 4: DECLARACIÓN REFLEXIVA (3%)
+        if (chance < 0.03) {
+            const specialQuote = getUniqueQuote('usedReflexivas', declaracionesReflexivas);
+            displaySingleQuote(specialQuote.quote, specialQuote.theme, "⭐ Una Declaración Legendaria ⭐");
+        } 
+        // Nivel 3: MODO DIABLO (12%)
+        else if (chance < 0.15) {
+            const specialQuote = getUniqueQuote('usedDiablo', piroposModoDiablo);
+            displaySingleQuote(specialQuote.quote, specialQuote.theme, "⚠️ Misión Nivel Extremo ⚠️");
+        } 
+        // Nivel 2: DÍA JUGUETÓN (25%)
+        else if (chance < 0.40) {
+            const juguetonaQuote = getUniqueQuote('usedJuguetones', piroposJuguetones);
+            const romanticaQuote = getUniqueQuote('usedRomanticos', piroposRomanticos);
+            displayTwoQuotes(juguetonaQuote, romanticaQuote);
+        } 
+        // Nivel 1: DÍA NORMAL (60%)
+        else {
+            const romanticaQuote = getUniqueQuote('usedRomanticos', piroposRomanticos);
+            displaySingleQuote(romanticaQuote.quote, romanticaQuote.theme, "Frase del Día");
+        }
+        
+        // 4. Guardar la frase recién generada en la memoria para el día de hoy.
+        const newQuoteData = {
+          date: today,
+          content: quoteContentEl.innerHTML // Guardamos el HTML completo de la frase.
+        };
+        localStorage.setItem('dailyQuote', JSON.stringify(newQuoteData));
+      }
+      
+      // --- INICIO ---
+      // Llamamos a la nueva función de inicialización al cargar la página.
+      initializeDailyQuote();
+
+    </script>
+</body>
+</html>

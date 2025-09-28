@@ -1,0 +1,266 @@
+/* style.css */
+:root {
+  --bg: #0f1226;
+  --accent: #ff6b9a;
+  --accent2: #ff2d95;
+  --text: #ffffff;
+  --dark-glass: rgba(0,0,0,0.15);
+  --light-glass: rgba(255,255,255,0.05);
+}
+
+html, body { 
+  height: 100%; 
+  margin: 0; 
+  font-family: 'Segoe UI', system-ui, -apple-system, Roboto, 'Helvetica Neue', Arial; 
+}
+
+body { 
+  background: var(--bg); 
+  color: var(--text); 
+  overflow-x: hidden;
+}
+
+/* Fondo (se usa en todas las páginas) */
+.bgmedia { 
+  position: fixed; 
+  inset: 0; 
+  z-index: -1; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  overflow: hidden; 
+}
+.bgmedia img { 
+  min-width: 100%; 
+  min-height: 100%; 
+  object-fit: cover; 
+  filter: blur(2px) saturate(1.05); 
+  opacity: 0.6; 
+}
+
+/* Contenido Principal (usado en todas las páginas) */
+.stage { 
+  min-height: 100vh; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  flex-direction: column; 
+  padding: 32px; 
+  box-sizing: border-box; 
+  position: relative;
+}
+
+h1 { 
+  font-size: clamp(28px, 5vw, 48px); 
+  margin: 0 0 8px; 
+  text-align: center; 
+  letter-spacing: 0.8px; 
+  font-weight: 700; 
+  text-shadow: 0 0 10px rgba(0,0,0,0.5), 0 0 20px rgba(0,0,0,0.5); 
+}
+p.lead { 
+  margin: 0 0 24px; 
+  opacity: 0.95; 
+  text-align: center; 
+  max-width: 600px; 
+  font-size: clamp(16px, 2.5vw, 18px); 
+  text-shadow: 0 0 8px rgba(0,0,0,0.7); 
+}
+
+/* Hub de Navegación (SOLO para index.html) */
+.hub-nav { 
+  display: flex; 
+  gap: 16px; 
+  flex-wrap: wrap; 
+  justify-content: center; 
+  margin-top: 20px; 
+}
+.hub-btn { 
+  background: var(--light-glass); 
+  border: 1px solid rgba(255,255,255,0.1); 
+  padding: 12px 18px; 
+  border-radius: 16px; 
+  color: var(--text); 
+  cursor: pointer; 
+  backdrop-filter: blur(8px); 
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  gap: 8px; 
+  transition: transform 0.2s, background 0.2s; 
+  width: 100px; 
+  text-align: center;
+  text-decoration: none;
+}
+.hub-btn:hover { 
+  transform: translateY(-5px); 
+  background: rgba(255,255,255,0.1); 
+}
+.hub-btn svg { width: 32px; height: 32px; fill: var(--accent); }
+.hub-btn span { font-size: 13px; font-weight: 600; }
+
+/* Tarjeta de Contenido (para las páginas internas) */
+.content-card {
+  background: linear-gradient(145deg, rgba(30, 35, 70, 0.8), rgba(15, 18, 38, 0.9));
+  border-radius: 24px;
+  padding: 28px 32px;
+  max-width: 90%;
+  width: 600px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  border: 1px solid rgba(255,255,255,0.1);
+  backdrop-filter: blur(10px);
+  text-align: center;
+}
+.content-card h2 { 
+  font-size: clamp(22px, 4vw, 32px); 
+  margin: 0 0 16px; 
+  color: var(--accent); 
+}
+
+/* Navegación Superior (para las páginas internas) */
+.main-nav {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--light-glass);
+  backdrop-filter: blur(8px);
+  border-radius: 99px;
+  padding: 8px;
+  z-index: 100;
+}
+.main-nav a {
+  color: var(--text);
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 99px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+.main-nav a:hover {
+  background-color: var(--dark-glass);
+}
+.main-nav a.active {
+  background-color: var(--accent);
+  box-shadow: 0 0 10px var(--accent);
+}
+.main-nav a.home-link {
+    font-weight: bold;
+}
+
+
+/* Estilos específicos del Contador */
+#relationship-timer { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin: 24px 0; }
+.time-unit { background: var(--light-glass); padding: 12px; border-radius: 12px; min-width: 70px; }
+.time-unit .number { font-size: clamp(28px, 6vw, 40px); font-weight: 700; color: var(--text); font-family: 'Courier New', Courier, monospace; }
+.time-unit .label { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; opacity: 0.7; }
+
+/* Estilos específicos de Frases */
+#daily-quote-content blockquote { font-size: clamp(18px, 3vw, 22px); margin: 20px 0; font-style: italic; opacity: 0.95; line-height: 1.5; }
+#daily-quote-content cite { display: block; margin-top: 12px; font-size: 14px; color: var(--accent); font-weight: 600; }
+
+/* Estilos específicos de Música */
+.music-container iframe { border-radius: 12px; border: none; width: 100%; height: 380px; margin-bottom: 20px; }
+.btn { background: linear-gradient(180deg, var(--accent), var(--accent2)); border: none; padding: 10px 20px; border-radius: 12px; color: #fff; font-weight: 600; cursor: pointer; box-shadow: 0 6px 18px rgba(255,60,140,0.12); text-decoration: none; display: inline-block; }
+
+/* Footer */
+.footer { position:fixed; right:12px; bottom:12px; z-index:120; color:rgba(255,255,255,0.7); font-size:13px; }
+/* --- NUEVOS ESTILOS PARA FECHAS ESPECIALES --- */
+
+/* Modal/Pop-up (Ajuste para que funcione con los nuevos) */
+.modal-overlay { 
+  position: fixed; 
+  inset: 0; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  background: rgba(0,0,0,0.5); 
+  z-index: 200; 
+  backdrop-filter: blur(10px); 
+  opacity: 0; 
+  pointer-events: none; 
+  transition: opacity .3s ease; 
+}
+.modal-overlay.show { 
+  opacity: 1; 
+  pointer-events: auto; 
+}
+.modal-content { 
+  background: linear-gradient(145deg, rgba(30, 35, 70, 0.8), rgba(15, 18, 38, 0.9));
+  border-radius: 24px;
+  padding: 28px 32px;
+  max-width: 90%;
+  width: 500px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  border: 1px solid rgba(255,255,255,0.1);
+  animation: modal-pop 0.4s ease-out;
+  text-align: center;
+  position: relative;
+}
+@keyframes modal-pop { 
+  from { transform: scale(0.8); opacity: 0; } 
+  to { transform: scale(1); opacity: 1; } 
+}
+.modal-content h2 { 
+  font-size: clamp(22px, 4vw, 32px); 
+  margin: 0 0 16px; 
+  color: var(--accent); 
+}
+.modal-content p {
+  margin: 0 0 24px;
+  opacity: 0.9;
+  line-height: 1.6;
+}
+.modal-content .close-btn { 
+  position: absolute; 
+  top: 12px; 
+  right: 12px; 
+  background: var(--light-glass); 
+  border: none; 
+  border-radius: 50%; 
+  width: 32px; 
+  height: 32px; 
+  color: var(--text); 
+  font-size: 20px; 
+  cursor: pointer; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  line-height: 1; 
+  transition: background 0.2s; 
+}
+.modal-content .close-btn:hover { background: var(--accent); }
+
+
+/* Contenedor para efectos especiales */
+#special-effects-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 999;
+  overflow: hidden;
+}
+
+/* Partículas de corazón */
+.heart-particle {
+  position: absolute;
+  top: -20px;
+  font-size: 20px;
+  animation: fall linear forwards;
+}
+
+.heart-particle::before {
+  content: '💖';
+  opacity: 0.8;
+  text-shadow: 0 0 5px var(--accent);
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(105vh) rotate(360deg);
+  }
+}
